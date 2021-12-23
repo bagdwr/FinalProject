@@ -16,4 +16,9 @@ public class BookRepository {
     public Book createBook(Book book) {
         return dBmanager.createBook(book);
     }
+
+    @Test
+    public Book getBookByID(Integer id){
+        return dBmanager.getBookByID(id);
+    }
 }

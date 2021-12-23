@@ -1,6 +1,7 @@
 package com.example.finalproject.Service;
 
 import com.example.finalproject.Model.Book;
+import com.example.finalproject.Model.Library;
 import com.example.finalproject.Repository.BookRepository;
 import org.junit.Test;
 
@@ -17,6 +18,14 @@ public class BookService {
         if (!name.isEmpty() && !author.isEmpty() && !genre.isEmpty()){
             Book book=new Book(null,name,author,genre);
             return bookRepository.createBook(book);
+        }
+        return null;
+    }
+
+    @Test
+    public Book getBookById(Integer id){
+        if (id!=null){
+            return bookRepository.getBookByID(id);
         }
         return null;
     }

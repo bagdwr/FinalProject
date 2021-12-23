@@ -1,5 +1,6 @@
 package com.example.finalproject.Repository;
 
+import com.example.finalproject.Model.Book;
 import com.example.finalproject.Model.DBmanager;
 import com.example.finalproject.Model.Library;
 import org.junit.Test;
@@ -15,5 +16,14 @@ public class LibraryRepository {
     @Test
     public Library createLibrary(Library library) {
         return dBmanager.createLibrary(library);
+    }
+
+    @Test
+    public Library getLibByID(Integer id){
+        return dBmanager.getLibByID(id);
+    }
+
+    public Library createLibraryBookJoint(Library library, Book book) {
+        return dBmanager.createLibraryBookJoint(library,book);
     }
 }

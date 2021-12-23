@@ -171,5 +171,24 @@ public class AdministrationController {
                     .build();
         }
     }
+
+    @RolesAllowed({"ROLE_ADMIN"})
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path(value = "/createLibraryBookJoint/{lib_id}/{book_id}")
+    public Response createLibraryBookJoint(
+            @PathParam(value = "lib_id")Integer lib_id,
+            @PathParam(value = "book_id")Integer book_id
+    ){
+        Library library=libraryService.createLibraryBookJoint(lib_id,book_id);
+        if (library!=null){
+            return Response.ok()
+                    .entity(library)
+                    .build();
+        }
+        return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                .entity(new ErrorMessage(400,"Adding book to library error!"))
+                .build();
+    }
     //endregion
 }

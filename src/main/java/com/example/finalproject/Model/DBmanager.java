@@ -161,5 +161,59 @@ public class DBmanager {
         }
         return library;
     }
+
+    public Library getLibByID(Integer id) {
+        Library library=null;
+        try {
+            PreparedStatement preparedStatement=connection.prepareStatement("SELECT* from Library where id=?");
+            preparedStatement.setInt(1,id);
+            ResultSet resultSet=preparedStatement.executeQuery();
+            if (resultSet.next()){
+                library=new Library(resultSet.getInt("id"), resultSet.getString("name"),resultSet.getString("address"),null);
+            }
+
+            PreparedStatement preparedStatement1=connection.prepareStatement("SELECT Book.id, Book.name,Book.author,Book.genre from Book, LibraryBookJoint, Library where LibraryBookJoint.book_id=Book.id and Library.id=LibraryBookJoint.library_id and Library.id=?");
+            preparedStatement1.setInt(1,id);
+            resultSet=preparedStatement1.executeQuery();
+            List<Book>books=new ArrayList<>();
+            while (resultSet.next()){
+                books.add(new Book(resultSet.getInt("id"),resultSet.getString("name"),resultSet.getString("author"), resultSet.getString("genre")));
+            }
+            library.setBooks(books);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+
+        return library;
+    }
+
+    public Book getBookByID(Integer id) {
+        Book book=null;
+        try {
+            PreparedStatement preparedStatement=connection.prepareStatement("SELECT* from Book where id=?");
+            preparedStatement.setInt(1,id);
+            ResultSet resultSet=preparedStatement.executeQuery();
+            if (resultSet.next()){
+                book=new Book(resultSet.getInt("id"), resultSet.getString("name"),resultSet.getString("author"), resultSet.getString("genre"));
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return book;
+    }
+
+    public Library createLibraryBookJoint(Library library, Book book) {
+        try {
+            PreparedStatement preparedStatement= connection.prepareStatement("INSERT INTO LibraryBookJoint values (null,?,?)");
+            preparedStatement.setInt(1,library.getId());
+            preparedStatement.setInt(2,book.getId());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            library=getLibByID(library.getId());
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return library;
+    }
     //endregion
 }
