@@ -25,9 +25,16 @@ public class UserService {
 
     public User getUserByEmail(String email){
         if (!email.isEmpty()){
-            return getUserByEmail(email);
+            return userRepository.getUserByEmail(email);
         }else {
             return null;
         }
+    }
+
+    public User getUserByID(Integer id) {
+        if (id!=null){
+            return userRepository.getUserByID(id);
+        }
+        return null;
     }
 }

@@ -5,6 +5,7 @@ import com.example.finalproject.Model.User;
 import com.example.finalproject.Service.UserService;
 
 import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -17,6 +18,8 @@ public class AdministrationController {
     @EJB
     UserService userService;
 
+    //region USER
+    //http://localhost:8080/final/api/admin/signUp
     @PermitAll
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -34,9 +37,60 @@ public class AdministrationController {
                     .entity(user)
                     .build();
         }else {
-            return Response.status(203)
-                    .entity(new ErrorMessage(203,"User creation error!"))
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(new ErrorMessage(400,"User creation error!"))
                     .build();
         }
     }
+
+    @GET
+    @RolesAllowed({"ROLE_ADMIN"})
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path(value = "/getUserById/{id}")
+    public Response getUserById(
+            @PathParam(value = "id") Integer id
+    ){
+        if (id!=null){
+            User user=userService.getUserByID(id);
+            if (user!=null){
+                return Response.ok()
+                        .entity(user)
+                        .build();
+            }else {
+                return Response.status(Response.Status.NO_CONTENT)
+                        .entity(new ErrorMessage(204,"User not found!"))
+                        .build();
+            }
+        }else {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(new ErrorMessage(400,"Enter ID!"))
+                    .build();
+        }
+    }
+
+    @GET
+    @PermitAll
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path(value = "/getUserByEmail")
+    public Response getUserById(
+            @QueryParam(value = "email") String email
+    ){
+        if (!email.isEmpty()){
+            User user=userService.getUserByEmail(email);
+            if (user!=null){
+                return Response.ok()
+                        .entity(user)
+                        .build();
+            }else {
+                return Response.status(Response.Status.NO_CONTENT)
+                        .entity(new ErrorMessage(204,"User not found!"))
+                        .build();
+            }
+        }else {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(new ErrorMessage(400,"Enter ID!"))
+                    .build();
+        }
+    }
+    //endregion
 }

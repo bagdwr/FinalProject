@@ -2,6 +2,7 @@ package com.example.finalproject.Model;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.sql.*;
+import java.util.ArrayList;
 
 @ApplicationScoped
 public class DBmanager {
@@ -50,10 +51,59 @@ public class DBmanager {
             ex.printStackTrace();
         }
     }
-
-    public User getUserByEmail(String email){
+    public User getUserByID(Integer id) {
         User user=null;
+        try {
+            PreparedStatement preparedStatement= connection.prepareStatement("SELECT * FROM User  where id=?");
+            preparedStatement.setInt(1,id);
+            ResultSet resultSet= preparedStatement.executeQuery();
 
+            if (resultSet.next()){
+                user=new User(resultSet.getInt("id"),resultSet.getString("name")
+                        ,resultSet.getString("email"),resultSet.getDate("birthday").toLocalDate()
+                        ,resultSet.getString("password"),null);
+            }
+            preparedStatement=connection.prepareStatement("SELECT Role.ID, Role.name from Role inner join UserRoleJoint on Role.ID=UserRoleJoint.role_id inner " +
+                    "join User on User.id=UserRoleJoint.user_id where User.id=?");
+            preparedStatement.setInt(1,user.getId());
+            ArrayList<Role> roles=new ArrayList<>();
+            resultSet=preparedStatement.executeQuery();
+            while (resultSet.next()){
+                roles.add(new Role(resultSet.getInt("id"),resultSet.getString("name")));
+            }
+            user.setRoles(roles);
+
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return user;
+    }
+
+    public User getUserByEmail(String email) {
+        User user=null;
+        try {
+            PreparedStatement preparedStatement= connection.prepareStatement("SELECT * FROM User  where email=?");
+            preparedStatement.setString(1,email);
+            ResultSet resultSet= preparedStatement.executeQuery();
+
+            if (resultSet.next()){
+                user=new User(resultSet.getInt("id"),resultSet.getString("name")
+                        ,resultSet.getString("email"),resultSet.getDate("birthday").toLocalDate()
+                        ,resultSet.getString("password"),null);
+            }
+            preparedStatement=connection.prepareStatement("SELECT Role.ID, Role.name from Role inner join UserRoleJoint on Role.ID=UserRoleJoint.role_id inner " +
+                    "join User on User.id=UserRoleJoint.user_id where User.id=?");
+            preparedStatement.setInt(1,user.getId());
+            ArrayList<Role> roles=new ArrayList<>();
+            resultSet=preparedStatement.executeQuery();
+            while (resultSet.next()){
+                roles.add(new Role(resultSet.getInt("id"),resultSet.getString("name")));
+            }
+            user.setRoles(roles);
+
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
         return user;
     }
     //endregion

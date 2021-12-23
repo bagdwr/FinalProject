@@ -18,4 +18,8 @@ public class UserRepository {
     public User getUserByEmail(String email){
         return dBmanager.getUserByEmail(email);
     }
+
+    public User getUserByID(Integer id) {
+        return dBmanager.getUserByID(id);
+    }
 }

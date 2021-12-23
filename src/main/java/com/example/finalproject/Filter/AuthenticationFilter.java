@@ -56,8 +56,8 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
 
                         //Split username and password tokens
                         final StringTokenizer tokenizer;
-                tokenizer = new StringTokenizer(usernameAndPassword, ":");
-                final String username = tokenizer.nextToken();
+                        tokenizer = new StringTokenizer(usernameAndPassword, ":");
+                        final String username = tokenizer.nextToken();
                         final String password = tokenizer.nextToken();
 
                         //Verify user access
@@ -68,11 +68,21 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
                             //Is user valid?
                             User user=userService.getUserByEmail(username);
                             if (user!=null){
-                                if (!isUserAllowed(user.getEmail(), user.getPassword(),rolesSet, user.getRoles())) {
+                                if ( user.getEmail().equals(username) && user.getPassword().equals(password)){
+                                    if (!isUserAllowed(rolesSet, user.getRoles())) {
+                                        requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)
+                                                .entity("You cannot access this resource").build());
+                                        return;
+                                    }
+                                }else {
                                     requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)
-                                            .entity("You cannot access this resource").build());
+                                            .entity("Wrong password").build());
                                     return;
                                 }
+                            }else {
+                                requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)
+                                        .entity("THERE IS NO SUCH USER").build());
+                                return;
                             }
 
                         }
@@ -85,7 +95,7 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
         }
     }
 
-    private boolean isUserAllowed(final String username, final String password, final Set<String> rolesSet,final List<Role>roles) {
+    private boolean isUserAllowed(final Set<String> rolesSet,final List<Role>roles) {
         boolean isAllowed = false;
 
         if (rolesSet.contains("ROLE_ADMIN")) {
