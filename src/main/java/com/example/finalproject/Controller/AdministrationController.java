@@ -172,6 +172,7 @@ public class AdministrationController {
         }
     }
 
+    //http://localhost:8080/final/api/admin/createLibraryBookJoint/1/4
     @RolesAllowed({"ROLE_ADMIN"})
     @POST
     @Produces(MediaType.APPLICATION_JSON)
