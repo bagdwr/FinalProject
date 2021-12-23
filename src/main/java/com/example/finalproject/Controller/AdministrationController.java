@@ -43,6 +43,7 @@ public class AdministrationController {
         }
     }
 
+    //http://localhost:8080/final/api/admin/getUserById/4
     @GET
     @RolesAllowed({"ROLE_ADMIN"})
     @Produces(MediaType.APPLICATION_JSON)
@@ -68,8 +69,9 @@ public class AdministrationController {
         }
     }
 
+    //http://localhost:8080/final/api/admin/getUserByEmail?email=Daur@gmail.com
     @GET
-    @PermitAll
+    @RolesAllowed({"ROLE_ADMIN"})
     @Produces(MediaType.APPLICATION_JSON)
     @Path(value = "/getUserByEmail")
     public Response getUserById(
