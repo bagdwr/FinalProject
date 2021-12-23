@@ -58,7 +58,7 @@ public class AdministrationController {
                         .entity(user)
                         .build();
             }else {
-                return Response.status(Response.Status.NO_CONTENT)
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                         .entity(new ErrorMessage(204,"User not found!"))
                         .build();
             }
@@ -84,13 +84,13 @@ public class AdministrationController {
                         .entity(user)
                         .build();
             }else {
-                return Response.status(Response.Status.NO_CONTENT)
-                        .entity(new ErrorMessage(204,"User not found!"))
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                        .entity(new ErrorMessage(500,"User not found!"))
                         .build();
             }
         }else {
             return Response.status(Response.Status.BAD_REQUEST)
-                    .entity(new ErrorMessage(400,"Enter ID!"))
+                    .entity(new ErrorMessage(400,"Enter EMAIL!"))
                     .build();
         }
     }

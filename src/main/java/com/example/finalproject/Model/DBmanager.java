@@ -100,7 +100,6 @@ public class DBmanager {
                 roles.add(new Role(resultSet.getInt("id"),resultSet.getString("name")));
             }
             user.setRoles(roles);
-
         }catch (Exception ex){
             ex.printStackTrace();
         }
