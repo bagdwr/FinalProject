@@ -3,6 +3,7 @@ package com.example.finalproject.Model;
 import javax.enterprise.context.ApplicationScoped;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 @ApplicationScoped
 public class DBmanager {
@@ -104,6 +105,61 @@ public class DBmanager {
             ex.printStackTrace();
         }
         return user;
+    }
+
+    public List<User> getAllUsers() {
+        List<User>users=new ArrayList<>();
+        try {
+            PreparedStatement preparedStatement=connection.prepareStatement("SELECT * FROM User;");
+            ResultSet resultSet=preparedStatement.executeQuery();
+            while (resultSet.next()){
+                List<Role>roles=new ArrayList<>();
+                preparedStatement=connection.prepareStatement("SELECT Role.ID, Role.name from Role inner join UserRoleJoint on Role.ID=UserRoleJoint.role_id inner\n" +
+                        "join User on User.id=UserRoleJoint.user_id where User.id=?");
+                preparedStatement.setInt(1,resultSet.getInt("id"));
+                ResultSet resultRole=preparedStatement.executeQuery();
+                while (resultRole.next()){
+                    roles.add(new Role(resultRole.getInt("id"),resultRole.getString("name")));
+                }
+                users.add(new User(resultSet.getInt("id"),resultSet.getString("name"),
+                        resultSet.getString("email"),resultSet.getDate("birthday").toLocalDate(),
+                        resultSet.getString("password"),
+                        roles));
+            }
+            preparedStatement.close();
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return users;
+    }
+    //endregion
+
+    //region Library
+    public Book createBook(Book book) {
+        try {
+            PreparedStatement preparedStatement= connection.prepareStatement("INSERT INTO Book values (null,?,?,?)");
+            preparedStatement.setString(1,book.getName());
+            preparedStatement.setString(2, book.getGenre());
+            preparedStatement.setString(3, book.getAuthor());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return book;
+    }
+
+    public Library createLibrary(Library library){
+        try {
+            PreparedStatement preparedStatement= connection.prepareStatement("INSERT INTO Library values (null,?,?)");
+            preparedStatement.setString(1,library.getName());
+            preparedStatement.setString(2, library.getAddress());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return library;
     }
     //endregion
 }

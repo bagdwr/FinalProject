@@ -5,6 +5,7 @@ import com.example.finalproject.Model.User;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import java.util.List;
 
 @Stateless
 public class UserRepository {
@@ -21,5 +22,9 @@ public class UserRepository {
 
     public User getUserByID(Integer id) {
         return dBmanager.getUserByID(id);
+    }
+
+    public List<User> getAllUsers() {
+        return dBmanager.getAllUsers();
     }
 }

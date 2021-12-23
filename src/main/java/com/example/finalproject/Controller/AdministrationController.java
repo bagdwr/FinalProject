@@ -1,7 +1,11 @@
 package com.example.finalproject.Controller;
 
+import com.example.finalproject.Model.Book;
 import com.example.finalproject.Model.ErrorMessage;
+import com.example.finalproject.Model.Library;
 import com.example.finalproject.Model.User;
+import com.example.finalproject.Service.BookService;
+import com.example.finalproject.Service.LibraryService;
 import com.example.finalproject.Service.UserService;
 
 import javax.annotation.security.PermitAll;
@@ -10,6 +14,8 @@ import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Path(value = "/admin")
@@ -17,6 +23,12 @@ import javax.ws.rs.core.Response;
 public class AdministrationController {
     @EJB
     UserService userService;
+
+    @EJB
+    BookService bookService;
+
+    @EJB
+    LibraryService libraryService;
 
     //region USER
     //http://localhost:8080/final/api/admin/signUp
@@ -91,6 +103,71 @@ public class AdministrationController {
         }else {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity(new ErrorMessage(400,"Enter EMAIL!"))
+                    .build();
+        }
+    }
+
+    //http://localhost:8080/final/api/admin/getAllUsers
+    @GET
+    @RolesAllowed({"ROLE_ADMIN"})
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path(value = "/getAllUsers")
+    public Response getAllUsers(){
+        List<User>users=userService.getAllUsers();
+        if (!users.isEmpty()){
+            return Response.ok()
+                    .entity(users)
+                    .build();
+        }else {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(new ErrorMessage(500,"EMPTY LIST"))
+                    .build();
+        }
+    }
+    //endregion
+
+    //region Library
+    //http://localhost:8080/final/api/admin/createBook
+    @RolesAllowed({"ROLE_ADMIN"})
+    @POST
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path(value = "/createBook")
+    public Response createBook(
+            @FormParam(value = "name") String name,
+            @FormParam(value = "author")String author,
+            @FormParam(value = "genre")String genre
+    ){
+        Book book= bookService.createBook(name,author,genre);
+        if (book!=null){
+            return Response.ok()
+                    .entity(book)
+                    .build();
+        }else {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(new ErrorMessage(400,"Book creation error!"))
+                    .build();
+        }
+    }
+
+    //http://localhost:8080/final/api/admin/createLibrary
+    @RolesAllowed({"ROLE_ADMIN"})
+    @POST
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path(value = "/createLibrary")
+    public Response createLibrary(
+            @FormParam(value = "name") String name,
+            @FormParam(value = "address")String address
+    ){
+        Library library=libraryService.createLibrary(name,address);
+        if (library!=null){
+            return Response.ok()
+                    .entity(library)
+                    .build();
+        }else {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(new ErrorMessage(400,"Library creation error!"))
                     .build();
         }
     }
