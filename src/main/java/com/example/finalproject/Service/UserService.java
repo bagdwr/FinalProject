@@ -2,6 +2,7 @@ package com.example.finalproject.Service;
 
 import com.example.finalproject.Model.User;
 import com.example.finalproject.Repository.UserRepository;
+import org.junit.Test;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -14,6 +15,7 @@ public class UserService {
     @EJB
     UserRepository userRepository;
 
+    @Test
     public User createUser(String name,String email,String birthday,String password){
         if (!name.isEmpty() && !birthday.isEmpty() && !email.isEmpty() && !password.isEmpty()){
             DateTimeFormatter formatter=DateTimeFormatter.ofPattern("d/MM/yyyy");
@@ -24,6 +26,7 @@ public class UserService {
         }
     }
 
+    @Test
     public User getUserByEmail(String email){
         if (!email.isEmpty()){
             return userRepository.getUserByEmail(email);
@@ -32,6 +35,7 @@ public class UserService {
         }
     }
 
+    @Test
     public User getUserByID(Integer id) {
         if (id!=null){
             return userRepository.getUserByID(id);
@@ -39,6 +43,7 @@ public class UserService {
         return null;
     }
 
+    @Test
     public List<User> getAllUsers() {
         return userRepository.getAllUsers();
     }
