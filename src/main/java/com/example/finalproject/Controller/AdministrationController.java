@@ -150,6 +150,7 @@ public class AdministrationController {
                 .build();
     }
 
+    //http://localhost:8080/final/api/admin/getAllUsersByAgeHigherThan/10
     @GET
     @RolesAllowed({"ROLE_ADMIN"})
     @Produces(MediaType.APPLICATION_JSON)

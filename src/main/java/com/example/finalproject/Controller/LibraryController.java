@@ -3,8 +3,10 @@ package com.example.finalproject.Controller;
 import com.example.finalproject.Model.Book;
 import com.example.finalproject.Model.ErrorMessage;
 import com.example.finalproject.Model.Library;
+import com.example.finalproject.Model.User;
 import com.example.finalproject.Service.BookService;
 import com.example.finalproject.Service.LibraryService;
+import com.example.finalproject.Service.UserService;
 
 import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
@@ -55,5 +57,23 @@ public class LibraryController {
                 .build();
     }
 
+    //http://localhost:8080/final/api/lib/createLibraryUserJoint/1/4
+    @PermitAll
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/createLibraryUserJoint/{lib_id}/{user_id}")
+    public Response createLibraryUserJoint(
+            @PathParam(value = "lib_id")Integer lib_id,
+            @PathParam(value = "user_id")Integer user_id
+    ){
+        if (lib_id!=null && user_id!=null){
+            libraryService.createLibraryUserJoint(lib_id,user_id);
+            return  Response.ok()
+                    .build();
+        }
+        return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                .entity(new ErrorMessage(400,"Library user joint creation error"))
+                .build();
+    }
 
 }

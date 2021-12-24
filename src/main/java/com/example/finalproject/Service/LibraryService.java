@@ -3,6 +3,7 @@ package com.example.finalproject.Service;
 import com.example.finalproject.Model.Book;
 import com.example.finalproject.Model.DBmanager;
 import com.example.finalproject.Model.Library;
+import com.example.finalproject.Model.User;
 import com.example.finalproject.Repository.LibraryRepository;
 import org.junit.Test;
 
@@ -16,6 +17,9 @@ public class LibraryService {
 
     @EJB
     BookService bookService;
+
+    @EJB
+    UserService userService;
 
     @Test
     public Library createLibrary(String name, String address) {
@@ -44,5 +48,16 @@ public class LibraryService {
             }
         }
         return null;
+    }
+
+    @Test
+    public void createLibraryUserJoint(Integer lib_id, Integer user_id){
+        if (lib_id!=null && user_id!=null){
+            User user= userService.getUserByID(user_id);
+            Library library=getLibById(lib_id);
+            if (user!=null && library!=null){
+                libraryRepository.createLibraryUserJoint(library,user);
+            }
+        }
     }
 }

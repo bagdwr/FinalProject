@@ -232,5 +232,16 @@ public class DBmanager {
         return library;
     }
 
+    public void createLibraryUserJoint(Library library, User user) {
+        try {
+            PreparedStatement preparedStatement=connection.prepareStatement("INSERT INTO LibraryUserJoint values (null,?,?)");
+            preparedStatement.setInt(1,library.getId());
+            preparedStatement.setInt(2,user.getId());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
     //endregion
 }

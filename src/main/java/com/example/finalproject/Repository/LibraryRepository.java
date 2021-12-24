@@ -3,6 +3,7 @@ package com.example.finalproject.Repository;
 import com.example.finalproject.Model.Book;
 import com.example.finalproject.Model.DBmanager;
 import com.example.finalproject.Model.Library;
+import com.example.finalproject.Model.User;
 import org.junit.Test;
 
 import javax.ejb.Stateless;
@@ -25,5 +26,9 @@ public class LibraryRepository {
 
     public Library createLibraryBookJoint(Library library, Book book) {
         return dBmanager.createLibraryBookJoint(library,book);
+    }
+
+    public void createLibraryUserJoint(Library library, User user) {
+        dBmanager.createLibraryUserJoint(library,user);
     }
 }
