@@ -32,4 +32,9 @@ public class UserRepository {
     public List<User> getAllUsers() {
         return dBmanager.getAllUsers();
     }
+
+    @Test
+    public User editUser(User user) {
+        return dBmanager.editUser(user);
+    }
 }

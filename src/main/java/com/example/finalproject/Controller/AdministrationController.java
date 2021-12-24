@@ -124,6 +124,52 @@ public class AdministrationController {
                     .build();
         }
     }
+
+    //http://localhost:8080/final/api/admin/editUser/1
+    @PUT
+    @RolesAllowed({"ROLE_ADMIN"})
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path(value = "/editUser/{id}")
+    public Response editUser(
+            @PathParam(value = "id") Integer id,
+            @FormParam(value = "name")String name,
+            @FormParam(value = "password")String password,
+            @FormParam(value = "birthday")String birthday
+    ){
+        if (id!=null && !name.isEmpty() && !name.isEmpty() && !password.isEmpty() && !birthday.isEmpty()){
+            User user=userService.getUserByID(id);
+            if (user!=null){
+                return Response.ok()
+                        .entity(userService.editUser(user,name,birthday,password))
+                        .build();
+            }
+        }
+        return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                .entity(new ErrorMessage(400,"User edit error"))
+                .build();
+    }
+
+    @GET
+    @RolesAllowed({"ROLE_ADMIN"})
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path(value = "/getAllUsersByAgeHigherThan/{age}")
+    public Response getAllUserHigherThan(@PathParam(value = "age")Integer age){
+        if (age!=null){
+            List<User>users=userService.getAllUsersHigherThan(age);
+            if (!users.isEmpty()){
+                return Response.ok()
+                        .entity(users)
+                        .build();
+            }
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(new ErrorMessage(400,"List is empty"))
+                    .build();
+        }
+        return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                .entity(new ErrorMessage(400,"AGE is empty"))
+                .build();
+    }
     //endregion
 
     //region Library

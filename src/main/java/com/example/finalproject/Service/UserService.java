@@ -9,6 +9,7 @@ import javax.ejb.Stateless;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Stateless
 public class UserService {
@@ -46,5 +47,21 @@ public class UserService {
     @Test
     public List<User> getAllUsers() {
         return userRepository.getAllUsers();
+    }
+
+    @Test
+    public User editUser(User user,String name, String birthday, String password) {
+        if (user!=null && !name.isEmpty() && !birthday.isEmpty() && !password.isEmpty()){
+            user.setName(name);
+            user.setBirthday(LocalDate.parse(birthday,DateTimeFormatter.ofPattern("d/MM/yyyy")));
+            user.setPassword(password);
+            return userRepository.editUser(user);
+        }
+        return null;
+    }
+
+    @Test
+    public List<User> getAllUsersHigherThan(Integer age) {
+        return getAllUsers().stream().filter(u->(LocalDate.now().getYear()-u.getBirthday().getYear())>age).collect(Collectors.toList());
     }
 }

@@ -132,6 +132,22 @@ public class DBmanager {
         }
         return users;
     }
+
+
+    public User editUser(User user) {
+        try {
+            PreparedStatement preparedStatement=connection.prepareStatement("UPDATE User set name=?, birthday=?, password=? where id=?");
+            preparedStatement.setString(1,user.getName());
+            preparedStatement.setDate(2,Date.valueOf(user.getBirthday()));
+            preparedStatement.setString(3,user.getPassword());
+            preparedStatement.setInt(4,user.getId());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return user;
+    }
     //endregion
 
     //region Library
@@ -215,5 +231,6 @@ public class DBmanager {
         }
         return library;
     }
+
     //endregion
 }
