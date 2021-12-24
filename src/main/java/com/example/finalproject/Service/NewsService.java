@@ -33,4 +33,11 @@ public class NewsService {
         }
         return null;
     }
+
+    @Test
+    public void deleteNewsById(Integer id) {
+        if (id!=null){
+            newsRepository.deleteNewsById(id);
+        }
+    }
 }

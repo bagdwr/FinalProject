@@ -21,4 +21,9 @@ public class NewsRepository {
     public News getNewsById(Integer new_id) {
         return dBmanager.getNewsById(new_id);
     }
+
+    @Test
+    public void deleteNewsById(Integer id) {
+        dBmanager.deleteNewsById(id);
+    }
 }

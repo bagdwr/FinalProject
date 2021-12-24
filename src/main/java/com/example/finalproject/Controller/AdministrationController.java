@@ -271,11 +271,11 @@ public class AdministrationController {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
     @Path(value = "/createNews")
-    public Response createGenre(
+    public Response createNews(
             @FormParam(value = "title") String title,
             @FormParam(value = "message")String message,
-            @FormParam(value = "genre_id")Integer genre_id
-    ){
+            @FormParam(value = "genre_id")Integer genre_id)
+    {
         if (!title.isEmpty() && !message.isEmpty() && genre_id!=null){
             News news=newsService.createNews(title,message,genre_id);
             if (news!=null){
@@ -289,6 +289,26 @@ public class AdministrationController {
         }
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                 .entity(new ErrorMessage(400,"News creation error"))
+                .build();
+    }
+
+    @RolesAllowed({"ROLE_ADMIN"})
+    @DELETE
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path(value = "/deleteNews")
+    public Response deleteNews(
+           @QueryParam(value = "id") Integer id
+    ){
+        if (id!=null){
+            News news=newsService.getNewsById(id);
+            if (news!=null){
+                newsService.deleteNewsById(id);
+                return Response.ok().build();
+            }
+        }
+        return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                .entity(new ErrorMessage(400,"Genre creation error"))
                 .build();
     }
     //endregion

@@ -302,5 +302,16 @@ public class DBmanager {
         }
         return news;
     }
+
+    public void deleteNewsById(Integer id) {
+        try {
+            PreparedStatement preparedStatement=connection.prepareStatement("DELETE From News where id=?");
+            preparedStatement.setInt(1,id);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
     //endregion
 }
