@@ -24,10 +24,12 @@ public class LibraryRepository {
         return dBmanager.getLibByID(id);
     }
 
+    @Test
     public Library createLibraryBookJoint(Library library, Book book) {
         return dBmanager.createLibraryBookJoint(library,book);
     }
 
+    @Test
     public void createLibraryUserJoint(Library library, User user) {
         dBmanager.createLibraryUserJoint(library,user);
     }

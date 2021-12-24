@@ -22,7 +22,7 @@ public class GenreService {
     }
 
     @Test
-    public Genre getGengreById(Integer genreId) {
+    public Genre getGenreById(Integer genreId) {
         if (genreId!=null){
             Genre genre=genreRepository.genreById(genreId);
             return genre;

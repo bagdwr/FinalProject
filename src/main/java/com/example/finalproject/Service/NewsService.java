@@ -19,7 +19,7 @@ public class NewsService {
     @Test
     public News createNews(String title, String message, Integer genderId){
         if (!title.isEmpty() && !message.isEmpty() && genderId!=null){
-            Genre genre=genreService.getGengreById(genderId);
+            Genre genre=genreService.getGenreById(genderId);
             News news=new News(null,title,message,genre);
             return newsRepository.createNews(news);
         }

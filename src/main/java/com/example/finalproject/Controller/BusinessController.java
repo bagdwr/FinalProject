@@ -48,7 +48,7 @@ public class BusinessController {
     @Path(value = "/getGenreById/{id}")
     public Response getGenreById(@PathParam(value = "id") Integer id){
         if (id!=null){
-            Genre genre=genreService.getGengreById(id);
+            Genre genre=genreService.getGenreById(id);
             if (genre!=null){
                 return Response.ok()
                         .entity(genre)
