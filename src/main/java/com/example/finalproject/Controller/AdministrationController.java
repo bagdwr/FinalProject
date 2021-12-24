@@ -1,12 +1,7 @@
 package com.example.finalproject.Controller;
 
-import com.example.finalproject.Model.Book;
-import com.example.finalproject.Model.ErrorMessage;
-import com.example.finalproject.Model.Library;
-import com.example.finalproject.Model.User;
-import com.example.finalproject.Service.BookService;
-import com.example.finalproject.Service.LibraryService;
-import com.example.finalproject.Service.UserService;
+import com.example.finalproject.Model.*;
+import com.example.finalproject.Service.*;
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
@@ -29,6 +24,12 @@ public class AdministrationController {
 
     @EJB
     LibraryService libraryService;
+
+    @EJB
+    NewsService newsService;
+
+    @EJB
+    GenreService genreService;
 
     //region USER
     //http://localhost:8080/final/api/admin/signUp
@@ -236,6 +237,58 @@ public class AdministrationController {
         }
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                 .entity(new ErrorMessage(400,"Adding book to library error!"))
+                .build();
+    }
+    //endregion
+
+    //region News
+    @RolesAllowed({"ROLE_ADMIN"})
+    @POST
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path(value = "/createGenre")
+    public Response createGenre(
+            @FormParam(value = "name") String name
+    ){
+        if (!name.isEmpty()){
+            Genre genre=genreService.createGenre(name);
+            if (genre!=null){
+                return Response.ok()
+                        .entity(genre)
+                        .build();
+            }
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(new ErrorMessage(400,"Genre creation error"))
+                    .build();
+        }
+        return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                .entity(new ErrorMessage(400,"Genre creation error"))
+                .build();
+    }
+
+    @RolesAllowed({"ROLE_ADMIN"})
+    @POST
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path(value = "/createNews")
+    public Response createGenre(
+            @FormParam(value = "title") String title,
+            @FormParam(value = "message")String message,
+            @FormParam(value = "genre_id")Integer genre_id
+    ){
+        if (!title.isEmpty() && !message.isEmpty() && genre_id!=null){
+            News news=newsService.createNews(title,message,genre_id);
+            if (news!=null){
+                return Response.ok()
+                        .entity(news)
+                        .build();
+            }
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(new ErrorMessage(400,"News creation error"))
+                    .build();
+        }
+        return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                .entity(new ErrorMessage(400,"News creation error"))
                 .build();
     }
     //endregion

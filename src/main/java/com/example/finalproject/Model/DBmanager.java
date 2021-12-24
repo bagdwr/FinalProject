@@ -243,5 +243,64 @@ public class DBmanager {
             ex.printStackTrace();
         }
     }
+
+    //endregion
+
+    //region News
+    public Genre createGenre(Genre genre) {
+        try {
+            PreparedStatement preparedStatement=connection.prepareStatement("INSERT INTO Genre values (null,?)");
+            preparedStatement.setString(1,genre.getName());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return genre;
+    }
+
+    public News createNews(News news){
+        try {
+            PreparedStatement preparedStatement=connection.prepareStatement("INSERT INTO News values (null,?,?,?)");
+            preparedStatement.setString(1,news.getTitle());
+            preparedStatement.setString(2,news.getMessage());
+            preparedStatement.setInt(3,news.getGenre().getId());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return news;
+    }
+
+    public Genre genreById(Integer genreId) {
+        Genre genre=null;
+        try {
+            PreparedStatement preparedStatement=connection.prepareStatement("SELECT * FROM Genre where id=?");
+            preparedStatement.setInt(1,genreId);
+            ResultSet resultSet=preparedStatement.executeQuery();
+            if (resultSet.next()){
+                genre=new Genre(resultSet.getInt("id"),resultSet.getString("name"));
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return genre;
+    }
+
+    public News getNewsById(Integer newsId){
+        News news=null;
+        try {
+            PreparedStatement preparedStatement=connection.prepareStatement("SELECT * FROM News where id=?");
+            preparedStatement.setInt(1,newsId);
+            ResultSet resultSet=preparedStatement.executeQuery();
+            if (resultSet.next()){
+                news=new News(resultSet.getInt("id"),resultSet.getString("title"),resultSet.getString("message"),genreById(resultSet.getInt("genre_id")));
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return news;
+    }
     //endregion
 }
