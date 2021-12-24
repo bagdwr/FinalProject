@@ -30,4 +30,13 @@ public class VacancyService {
         }
         return null;
     }
+
+    @Test
+    public Vacancy editVacancy(Vacancy vacancy) {
+        return vacancyRepository.editVacancy(vacancy);
+    }
+
+    public void deleteVacancy(Integer id) {
+        vacancyRepository.deleteVacancy(id);
+    }
 }

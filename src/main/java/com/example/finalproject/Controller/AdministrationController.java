@@ -10,6 +10,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -381,6 +382,47 @@ public class AdministrationController {
         }
         return Response.status(Response.Status.BAD_REQUEST)
                 .entity(new ErrorMessage(400,"JobCenterVacancyJoint creation error"))
+                .build();
+    }
+
+    @RolesAllowed({"ROLE_ADMIN"})
+    @PUT
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path(value = "/editVacancy/{id}")
+    public Response editVacancy(@PathParam(value = "id")Integer id,
+                                @FormParam(value = "name")String name,
+                                @FormParam(value = "salary")Integer salary,
+                                @FormParam(value = "points")String points){
+        if (id!=null){
+            Vacancy vacancy= vacancyService.getVacById(id);
+            if (vacancy!=null && !name.isEmpty() && salary!=null && points!=null){
+                vacancy.setName(name);
+                vacancy.setPoints(new BigDecimal(points).setScale(2, RoundingMode.HALF_EVEN));
+                vacancy.setSalary(salary);
+                return Response.ok()
+                        .entity(vacancyService.editVacancy(vacancy))
+                        .build();
+            }
+        }
+        return Response.status(Response.Status.BAD_REQUEST)
+                .entity(new ErrorMessage(400,"Vacancy empty ID"))
+                .build();
+    }
+
+    @RolesAllowed({"ROLE_ADMIN"})
+    @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path(value = "/deleteVacancy/{id}")
+    public Response deleteVacancy(@PathParam(value = "id")Integer id){
+        if (id!=null){
+            vacancyService.deleteVacancy(id);
+            return Response.ok()
+                    .entity(new ErrorMessage(200,"Vacancy was deleted"))
+                    .build();
+        }
+        return Response.status(Response.Status.BAD_REQUEST)
+                .entity(new ErrorMessage(400,"Vacancy empty ID"))
                 .build();
     }
     //endregion

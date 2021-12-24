@@ -412,5 +412,33 @@ public class DBmanager {
 
         return jobCenter;
     }
+
+    public Vacancy editVacancy(Vacancy vacancy) {
+        try {
+            PreparedStatement preparedStatement=connection.prepareStatement("UPDATE Vacancy set name=?, salary=?, points=? where id=?");
+            preparedStatement.setString(1, vacancy.getName());
+            preparedStatement.setInt(2,vacancy.getSalary());
+            preparedStatement.setDouble(3,vacancy.getPoints().doubleValue());
+            preparedStatement.setInt(4,vacancy.getId());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return vacancy;
+    }
+
+    public void deleteVacancy(Integer id) {
+        try {
+            PreparedStatement preparedStatement1=connection.prepareStatement("DELETE FROM JobCenterVacancyJoint where vacancy_id=?");
+            preparedStatement1.setInt(1,id);
+            preparedStatement1.executeUpdate();
+            PreparedStatement preparedStatement=connection.prepareStatement("DELETE FROM Vacancy where id=?");
+            preparedStatement.setInt(1,id);
+            preparedStatement.executeUpdate();
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
     //endregion
 }

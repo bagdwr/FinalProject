@@ -21,4 +21,13 @@ public class VacancyRepository {
     public Vacancy getVacById(Integer vac_id) {
         return dBmanager.getVacById(vac_id);
     }
+
+    @Test
+    public Vacancy editVacancy(Vacancy vacancy) {
+        return dBmanager.editVacancy(vacancy);
+    }
+
+    public void deleteVacancy(Integer id) {
+        dBmanager.deleteVacancy(id);
+    }
 }
