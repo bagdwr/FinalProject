@@ -1,6 +1,7 @@
 package com.example.finalproject.Model;
 
 import javax.enterprise.context.ApplicationScoped;
+import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -327,6 +328,89 @@ public class DBmanager {
             ex.printStackTrace();
         }
         return newsList;
+    }
+    //endregion
+
+    //region Job
+    public Vacancy createVacancy(Vacancy vacancy) {
+        try {
+             PreparedStatement preparedStatement=connection.prepareStatement("INSERT INTO Vacancy values (null,?,?,?)");
+             preparedStatement.setString(1,vacancy.getName());
+             preparedStatement.setInt(2,vacancy.getSalary());
+             preparedStatement.setDouble(3,vacancy.getPoints().doubleValue());
+             preparedStatement.executeUpdate();
+             preparedStatement.close();
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return vacancy;
+    }
+
+    public JobCenter createJobCenter(JobCenter jobCenter){
+        try {
+            PreparedStatement preparedStatement=connection.prepareStatement("INSERT INTO JobCenter values (null,?,?)");
+            preparedStatement.setString(1,jobCenter.getName());
+            preparedStatement.setString(2,jobCenter.getLocation());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return jobCenter;
+    }
+
+    public Vacancy getVacById(Integer vac_id) {
+        Vacancy vacancy=null;
+        try {
+            PreparedStatement preparedStatement=connection.prepareStatement("SELECT * FROM Vacancy where id=?");
+            preparedStatement.setInt(1,vac_id);
+            ResultSet resultSet=preparedStatement.executeQuery();
+            if (resultSet.next()){
+                vacancy=new Vacancy(resultSet.getInt("id"),resultSet.getString("name"),resultSet.getInt("salary"), BigDecimal.valueOf(resultSet.getDouble("points")));
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return vacancy;
+    }
+
+    public JobCenter getJobCenterById(Integer jobId){
+        JobCenter jobCenter=null;
+        try {
+            PreparedStatement preparedStatement=connection.prepareStatement("SELECT * From JobCenter where id=?");
+            preparedStatement.setInt(1,jobId);
+            ResultSet resultSet=preparedStatement.executeQuery();
+            if (resultSet.next()){
+                jobCenter=new JobCenter(jobId, resultSet.getString("name"),resultSet.getString("location"),null);
+            }
+            PreparedStatement preparedStatement1=connection.prepareStatement("SELECT Vacancy.id,Vacancy.name,Vacancy.salary, Vacancy.points from Vacancy INNER JOIN JobCenterVacancyJoint on Vacancy.id=JobCenterVacancyJoint.vacancy_id INNER JOIN JobCenter ON JobCenterVacancyJoint.jobcenter_id=JobCenter.id where JobCenter.id=?");
+            preparedStatement1.setInt(1,jobId);
+            ResultSet resultSet1=preparedStatement1.executeQuery();
+            List<Vacancy>vacancies=new ArrayList<>();
+            while (resultSet1.next()){
+                vacancies.add(new Vacancy(resultSet1.getInt("id"),resultSet1.getString("name"),resultSet1.getInt("salary"),BigDecimal.valueOf(resultSet1.getDouble("points"))));
+            }
+            jobCenter.setVacancies(vacancies);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return jobCenter;
+    }
+
+    public JobCenter createJobVacJoint(Integer job_id, Integer vac_id) {
+        JobCenter jobCenter=null;
+        try {
+            PreparedStatement preparedStatement=connection.prepareStatement("INSERT INTO JobCenterVacancyJoint values (null,?,?)");
+            preparedStatement.setInt(1,job_id);
+            preparedStatement.setInt(2,vac_id);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            jobCenter=getJobCenterById(job_id);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+
+        return jobCenter;
     }
     //endregion
 }

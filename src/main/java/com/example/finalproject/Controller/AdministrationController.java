@@ -9,6 +9,7 @@ import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +31,12 @@ public class AdministrationController {
 
     @EJB
     GenreService genreService;
+
+    @EJB
+    VacancyService vacancyService;
+
+    @EJB
+    JobCenterService jobCenterService;
 
     //region USER
     //http://localhost:8080/final/api/admin/signUp
@@ -309,6 +316,71 @@ public class AdministrationController {
         }
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                 .entity(new ErrorMessage(400,"Genre creation error"))
+                .build();
+    }
+    //endregion
+
+    //region JobSeeker
+
+    //http://localhost:8080/final/api/admin/createVacancy
+    @RolesAllowed({"ROLE_ADMIN"})
+    @POST
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path(value = "/createVacancy")
+    public Response createVacancy(
+            @FormParam(value = "name")String name,
+            @FormParam(value = "salary")Integer salary,
+            @FormParam(value = "points")String points
+            ){
+        Vacancy vacancy=vacancyService.createVacancy(name,salary,points);
+        if (vacancy!=null){
+            return Response.ok()
+                    .entity(vacancy)
+                    .build();
+        }
+        return Response.status(Response.Status.BAD_REQUEST)
+                .entity(new ErrorMessage(400,"Vacancy creation error"))
+                .build();
+    }
+
+    @RolesAllowed({"ROLE_ADMIN"})
+    @POST
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path(value = "/createJobCenter")
+    public Response createJobCenter(
+            @FormParam(value = "name")String name,
+            @FormParam(value = "location")String location
+    ){
+        JobCenter jobCenter= jobCenterService.createJobcenter(name,location);
+        if (jobCenter!=null){
+            return Response.ok()
+                    .entity(jobCenter)
+                    .build();
+        }
+        return Response.status(Response.Status.BAD_REQUEST)
+                .entity(new ErrorMessage(400,"Job center creation error"))
+                .build();
+    }
+
+    @RolesAllowed({"ROLE_ADMIN"})
+    @POST
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path(value = "/сreateJobVacancyJoint/{job_id}/{vac_id}")
+    public Response сreateJobVacancyJoint(
+            @PathParam(value = "job_id") Integer job_id,
+            @PathParam(value = "vac_id") Integer vac_id
+    ){
+        JobCenter jobCenter=jobCenterService.createJobVacJoint(job_id,vac_id);
+        if (jobCenter!=null){
+            return Response.ok()
+                    .entity(jobCenter)
+                    .build();
+        }
+        return Response.status(Response.Status.BAD_REQUEST)
+                .entity(new ErrorMessage(400,"JobCenterVacancyJoint creation error"))
                 .build();
     }
     //endregion
