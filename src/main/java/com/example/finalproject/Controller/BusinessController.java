@@ -14,6 +14,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 @PermitAll
 @Path(value = "/business")
@@ -57,6 +58,22 @@ public class BusinessController {
         }
         return Response.status(Response.Status.BAD_REQUEST)
                 .entity(new ErrorMessage(400,"EMPTY ID"))
+                .build();
+    }
+
+    @PermitAll
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path(value = "/getAllNews")
+    public Response getAllNews(){
+        List<News> newsList=newsService.getAllNews();
+        if (!newsList.isEmpty()){
+            return Response.ok()
+                    .entity(newsList)
+                    .build();
+        }
+        return Response.status(Response.Status.BAD_REQUEST)
+                .entity(new ErrorMessage(400,"Empty list"))
                 .build();
     }
 }

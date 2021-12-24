@@ -313,5 +313,20 @@ public class DBmanager {
             ex.printStackTrace();
         }
     }
+
+    public List<News> getAllNews() {
+        List<News>newsList=null;
+        try {
+            PreparedStatement preparedStatement=connection.prepareStatement("SELECT* FROM News INNER JOIN Genre on News.genre_id=Genre.id");
+            ResultSet resultSet=preparedStatement.executeQuery();
+            newsList=new ArrayList<>();
+            while (resultSet.next()){
+                newsList.add(new News(resultSet.getInt("News.id"), resultSet.getString("title"),resultSet.getString("message"),genreById(resultSet.getInt("genre_id"))));
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return newsList;
+    }
     //endregion
 }

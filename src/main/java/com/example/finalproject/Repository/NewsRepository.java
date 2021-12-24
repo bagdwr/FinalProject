@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import java.util.List;
 
 @Stateless
 public class NewsRepository {
@@ -25,5 +26,10 @@ public class NewsRepository {
     @Test
     public void deleteNewsById(Integer id) {
         dBmanager.deleteNewsById(id);
+    }
+
+    @Test
+    public List<News> getAllNews() {
+        return dBmanager.getAllNews();
     }
 }
