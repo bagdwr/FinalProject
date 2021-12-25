@@ -1,0 +1,1069 @@
+{
+	"info": {
+		"_postman_id": "5e97e2c3-b3b9-4c65-9bef-3f51f17788f8",
+		"name": "FinalEE",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "USER",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Daurbek",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "Daur@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "birthday",
+									"value": "15/09/2000",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "qweqwe",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/final/api/admin/signUp",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"final",
+								"api",
+								"admin",
+								"signUp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user by ID",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "qweqwe",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "Daurbek@gmail.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/final/api/admin/getUserById/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"final",
+								"api",
+								"admin",
+								"getUserById",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user by email",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "qweqwe",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "Daurbek@gmail.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/final/api/admin/getUserByEmail?email=Daur@gmail.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"final",
+								"api",
+								"admin",
+								"getUserByEmail"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "Daur@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all users",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/final/api/admin/getAllUsers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"final",
+								"api",
+								"admin",
+								"getAllUsers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit user",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "qwe",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "Daurbek@gmail.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Daurbek",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "qweqwe",
+									"type": "text"
+								},
+								{
+									"key": "birthday",
+									"value": "15/09/2001",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/final/api/admin/editUser/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"final",
+								"api",
+								"admin",
+								"editUser",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sign Up JMS",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "qweqwe",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "Daurbek@gmail.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Dias",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "Dias@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "birthday",
+									"value": "01/05/2010",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "qweqwe",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/final/api/admin/signUpJms",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"final",
+								"api",
+								"admin",
+								"signUpJms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get JMS",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "qweqwe",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "Daurbek@gmail.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/final/api/admin/receiveJMS",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"final",
+								"api",
+								"admin",
+								"receiveJMS"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Library/Book",
+			"item": [
+				{
+					"name": "create Book",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "Daurbek@gmail.com",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "qweqwe",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Omerta",
+									"type": "text"
+								},
+								{
+									"key": "author",
+									"value": "Mario Puso",
+									"type": "text"
+								},
+								{
+									"key": "genre",
+									"value": "Detective",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/final/api/admin/createBook",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"final",
+								"api",
+								"admin",
+								"createBook"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createLibraryBookJoint",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "Daurbek@gmail.com",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "qweqwe",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/final/api/admin/createLibraryBookJoint/1/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"final",
+								"api",
+								"admin",
+								"createLibraryBookJoint",
+								"1",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create Library",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "Daurbek@gmail.com",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "qweqwe",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Karev's library",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/final/api/admin/createLibrary",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"final",
+								"api",
+								"admin",
+								"createLibrary"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get library by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/final/api/lib/getLibById/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"final",
+								"api",
+								"lib",
+								"getLibById",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get book by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/final/api/lib/getBookById/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"final",
+								"api",
+								"lib",
+								"getBookById",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create library user joint",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/final/api/lib/createLibraryUserJoint/1/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"final",
+								"api",
+								"lib",
+								"createLibraryUserJoint",
+								"1",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Business",
+			"item": [
+				{
+					"name": "Create Genre",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "qweqwe",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "Daurbek@gmail.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Geography",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/final/api/admin/createGenre",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"final",
+								"api",
+								"admin",
+								"createGenre"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create News",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "qweqwe",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "Daurbek@gmail.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "title",
+									"value": "Facebook renames as a Meta",
+									"type": "text"
+								},
+								{
+									"key": "message",
+									"value": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+									"type": "text"
+								},
+								{
+									"key": "genre_id",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/final/api/admin/createNews",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"final",
+								"api",
+								"admin",
+								"createNews"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET genre by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/final/api/business/getGenreById/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"final",
+								"api",
+								"business",
+								"getGenreById",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET News by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/final/api/business/getNewsById/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"final",
+								"api",
+								"business",
+								"getNewsById",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete news by ID",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "qweqwe",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "Daurbek@gmail.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/final/api/admin/deleteNews?id=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"final",
+								"api",
+								"admin",
+								"deleteNews"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all news",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/final/api/business/getAllNews",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"final",
+								"api",
+								"business",
+								"getAllNews"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET all news by genre id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/final/api/business/getAllNewsByGenre?genreId=3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"final",
+								"api",
+								"business",
+								"getAllNewsByGenre"
+							],
+							"query": [
+								{
+									"key": "genreId",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Job",
+			"item": [
+				{
+					"name": "Create Vacancy",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "qweqwe",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "Daurbek@gmail.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Java Developer Middle",
+									"type": "text"
+								},
+								{
+									"key": "salary",
+									"value": "500000",
+									"type": "text"
+								},
+								{
+									"key": "points",
+									"value": "9.959",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/final/api/admin/createVacancy",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"final",
+								"api",
+								"admin",
+								"createVacancy"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Job Center",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "qweqwe",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "Daurbek@gmail.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Linkedln",
+									"type": "text"
+								},
+								{
+									"key": "location",
+									"value": "http://linkedin.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/final/api/admin/createJobCenter",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"final",
+								"api",
+								"admin",
+								"createJobCenter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET JobCenter by ID",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "qweqwe",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "Daurbek@gmail.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/final/api/jobseeker/getJobCenterById/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"final",
+								"api",
+								"jobseeker",
+								"getJobCenterById",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Vacancy by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/final/api/jobseeker/getVacById/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"final",
+								"api",
+								"jobseeker",
+								"getVacById",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit vacancy",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "qweqwe",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "Daurbek@gmail.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "DEVops",
+									"type": "text"
+								},
+								{
+									"key": "salary",
+									"value": "5000000",
+									"type": "text"
+								},
+								{
+									"key": "points",
+									"value": "9.388",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/final/api/admin/editVacancy/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"final",
+								"api",
+								"admin",
+								"editVacancy",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Vacancy",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "qweqwe",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "Daurbek@gmail.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/final/api/admin/deleteVacancy/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"final",
+								"api",
+								"admin",
+								"deleteVacancy",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -1,5 +1,6 @@
 package com.example.finalproject.Service;
 
+import com.example.finalproject.Interceptor.LibraryServiceInterceptor;
 import com.example.finalproject.Model.Book;
 import com.example.finalproject.Model.DBmanager;
 import com.example.finalproject.Model.Library;
@@ -9,6 +10,7 @@ import org.junit.Test;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.interceptor.Interceptors;
 
 @Stateless
 public class LibraryService {
@@ -22,6 +24,7 @@ public class LibraryService {
     UserService userService;
 
     @Test
+    @Interceptors({LibraryServiceInterceptor.class})
     public Library createLibrary(String name, String address) {
         if (!name.isEmpty() && !address.isEmpty()){
             Library library=new Library(null,name,address,null);
@@ -31,6 +34,7 @@ public class LibraryService {
     }
 
     @Test
+    @Interceptors({LibraryServiceInterceptor.class})
     public Library getLibById(Integer lib_id){
         if (lib_id!=null){
             return libraryRepository.getLibByID(lib_id);
@@ -39,6 +43,7 @@ public class LibraryService {
     }
 
     @Test
+    @Interceptors({LibraryServiceInterceptor.class})
     public Library createLibraryBookJoint(Integer lib_id,Integer book_id){
         if (lib_id!=null && book_id!=null){
             Library library=getLibById(lib_id);
@@ -51,6 +56,7 @@ public class LibraryService {
     }
 
     @Test
+    @Interceptors({LibraryServiceInterceptor.class})
     public void createLibraryUserJoint(Integer lib_id, Integer user_id){
         if (lib_id!=null && user_id!=null){
             User user= userService.getUserByID(user_id);
