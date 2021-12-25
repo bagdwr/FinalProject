@@ -27,6 +27,7 @@ public class VacancyRepository {
         return dBmanager.editVacancy(vacancy);
     }
 
+    @Test
     public void deleteVacancy(Integer id) {
         dBmanager.deleteVacancy(id);
     }

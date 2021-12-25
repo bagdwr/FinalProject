@@ -6,6 +6,7 @@ import com.example.finalproject.Service.*;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
+import javax.jms.JMSException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -38,6 +39,9 @@ public class AdministrationController {
 
     @EJB
     JobCenterService jobCenterService;
+
+    @EJB
+    JMSservice jmSservice;
 
     //region USER
     //http://localhost:8080/final/api/admin/signUp
@@ -179,6 +183,37 @@ public class AdministrationController {
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                 .entity(new ErrorMessage(400,"AGE is empty"))
                 .build();
+    }
+
+    @RolesAllowed({"ROLE_ADMIN"})
+    @POST
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path(value = "/signUpJms")
+    public Response createJMSUSer(
+            @FormParam(value = "name") String name,
+            @FormParam(value = "email")String email,
+            @FormParam(value = "birthday")String birthday,
+            @FormParam(value = "password")String password
+    ) throws JMSException {
+        User user= jmSservice.sendJMSmessage(name,email,birthday,password);
+        if (user!=null){
+            return Response.ok()
+                    .entity(user)
+                    .build();
+        }else {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(new ErrorMessage(400,"User creation error!"))
+                    .build();
+        }
+    }
+
+    @RolesAllowed({"ROLE_ADMIN"})
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    @Path("/receiveJMS")
+    public String receiveJMS() throws JMSException {
+        return jmSservice.getJMSmessage();
     }
     //endregion
 

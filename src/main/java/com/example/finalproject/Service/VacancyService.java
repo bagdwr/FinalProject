@@ -36,6 +36,7 @@ public class VacancyService {
         return vacancyRepository.editVacancy(vacancy);
     }
 
+    @Test
     public void deleteVacancy(Integer id) {
         vacancyRepository.deleteVacancy(id);
     }
